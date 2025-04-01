@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as RegistratciyaImport } from './routes/registratciya'
+import { Route as AvtorizatciyaImport } from './routes/avtorizatciya'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -19,6 +20,12 @@ import { Route as IndexImport } from './routes/index'
 const RegistratciyaRoute = RegistratciyaImport.update({
   id: '/registratciya',
   path: '/registratciya',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AvtorizatciyaRoute = AvtorizatciyaImport.update({
+  id: '/avtorizatciya',
+  path: '/avtorizatciya',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +46,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/avtorizatciya': {
+      id: '/avtorizatciya'
+      path: '/avtorizatciya'
+      fullPath: '/avtorizatciya'
+      preLoaderRoute: typeof AvtorizatciyaImport
+      parentRoute: typeof rootRoute
+    }
     '/registratciya': {
       id: '/registratciya'
       path: '/registratciya'
@@ -53,36 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/registratciya'
+  fullPaths: '/' | '/avtorizatciya' | '/registratciya'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/registratciya'
-  id: '__root__' | '/' | '/registratciya'
+  to: '/' | '/avtorizatciya' | '/registratciya'
+  id: '__root__' | '/' | '/avtorizatciya' | '/registratciya'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvtorizatciyaRoute: typeof AvtorizatciyaRoute
   RegistratciyaRoute: typeof RegistratciyaRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvtorizatciyaRoute: AvtorizatciyaRoute,
   RegistratciyaRoute: RegistratciyaRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/avtorizatciya",
         "/registratciya"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/avtorizatciya": {
+      "filePath": "avtorizatciya.tsx"
     },
     "/registratciya": {
       "filePath": "registratciya.tsx"
