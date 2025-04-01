@@ -1,0 +1,34 @@
+version: "3"
+
+
+services:
+# run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d DOMAIN
+  certbot:
+    image: docker.io/certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
+  nginx-http:
+    image: docker.io/nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/http.d/:/etc/nginx/conf.d/:ro
+      - ./certbot/www/:/var/www/certbot/:ro
+
+  nginx:
+    image: docker.io/nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/https.d/:/etc/nginx/conf.d/:ro
+      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf/live/bezum.hack.makridenko.ru/fullchain.pem:/etc/nginx/ssl/live/bezum.hack.makridenko.ru/fullchain.pem
+      - ./certbot/conf/live/bezum.hack.makridenko.ru/privkey.pem:/etc/nginx/ssl/live/bezum.hack.makridenko.ru/privkey.pem
+
+
