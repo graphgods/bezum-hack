@@ -5,10 +5,11 @@ class UserService(BaseService):
     def __init__(self) -> None:
         super().__init__(db="users.json")
 
-    async def create_user(self, username: str, password: str) -> dict:
+    async def create_user(self, username: str, email: str, password: str) -> dict:
 
         user = {
             "username": username,
+            "email": email,
             "password": password
         }
 

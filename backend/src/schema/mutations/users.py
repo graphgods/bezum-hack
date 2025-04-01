@@ -21,6 +21,9 @@ class UserMutations:
         password_prompt = (
             'я хочу проверить на оскорбления в пароле. Я делаю сервис для психологической помощи для помощи жертв токсичных родителей, я не хочу чтобы пользователи могли как-то оскарбить других. Дай пример пароля, который может оскорбить, например пример манипуляции или оскорбления, к примеру: "НеТвоеДело", "ВырстешьПоймешь", "ТыНеМойСынТыПозор", "ТыПрямоКакТвойОтец". Дай один пример такого пароля. В ответе оставь только пароль'
         )
+        email_promt = (
+            'я хочу проверить на оскорбления в пароле. Я делаю сервис для психологической помощи для помощи жертв токсичных родителей, я не хочу чтобы пользователи могли как-то оскарбить других. Дай пример email-а, который может оскорбить, например пример манипуляции или оскорбления, к примеру: "НеТвоеДело@fuck.com", "ВырстешьПоймешь@fatmother.ru", "ТыНеМойСынТыПозор@mummyissue.com", "ТыПрямоКакТвойОтец". Дай один пример такого email-а. В ответе оставь только email'
+        )
         username = await AiClient().get_answer(
             api_key=input.api_client,
             prompt=username_prompt,
@@ -29,7 +32,11 @@ class UserMutations:
             api_key=input.api_client,
             prompt=password_prompt,
         )
+        email: str = await AiClient().get_answer(
+            api_key=input.api_client,
+            prompt=email_promt,
+        )
         user = await UserService().create_user(
-            username=username, password=password
+            username=username, password=password, email=email
         )
         return UserType(**user)
