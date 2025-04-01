@@ -11,9 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RegistratciyaImport } from './routes/registratciya'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const RegistratciyaRoute = RegistratciyaImport.update({
+  id: '/registratciya',
+  path: '/registratciya',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/registratciya': {
+      id: '/registratciya'
+      path: '/registratciya'
+      fullPath: '/registratciya'
+      preLoaderRoute: typeof RegistratciyaImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/registratciya': typeof RegistratciyaRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/registratciya'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/registratciya'
+  id: '__root__' | '/' | '/registratciya'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RegistratciyaRoute: typeof RegistratciyaRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RegistratciyaRoute: RegistratciyaRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/registratciya"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/registratciya": {
+      "filePath": "registratciya.tsx"
     }
   }
 }
