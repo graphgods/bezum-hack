@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/avtorizatciya")({
-  component: RouteComponent,
+  component: Stranitca,
 });
 
-function RouteComponent() {
+function Stranitca() {
   return (
-    <div>
+    <div className="p-5">
       <h1>Авторизация</h1>
+      
     </div>
   );
 }

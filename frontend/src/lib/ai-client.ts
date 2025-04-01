@@ -2,7 +2,7 @@ import Together from "together-ai";
 
 export const AI_TOKEN = "07b8af60ea716f8fcda8cc72ef79a29a5350abe7b8fdd5a73e7412f371dd433e";
 
-const together = new Together();
+const together = new Together({ apiKey: AI_TOKEN });
 
 export const getIIOtvet = async ({ zapros }: { zapros: string }) => {
   const res = await together.chat.completions.create({
