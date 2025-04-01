@@ -18,7 +18,7 @@ import { Route as AvtorizatciyaImport } from './routes/avtorizatciya'
 import { Route as IndexImport } from './routes/index'
 import { Route as PrilozhenieLayoutImport } from './routes/prilozhenie/_layout'
 import { Route as PrilozhenieLayoutIndexImport } from './routes/prilozhenie/_layout/index'
-import { Route as PrilozheniePerepiskaImport } from './routes/prilozhenie/perepiska'
+import { Route as PrilozhenieLayoutPerepiskaImport } from './routes/prilozhenie/_layout/perepiska'
 
 // Create Virtual Routes
 
@@ -61,11 +61,13 @@ const PrilozhenieLayoutIndexRoute = PrilozhenieLayoutIndexImport.update({
   getParentRoute: () => PrilozhenieLayoutRoute,
 } as any)
 
-const PrilozheniePerepiskaRoute = PrilozheniePerepiskaImport.update({
-  id: '/prilozhenie/perepiska',
-  path: '/prilozhenie/perepiska',
-  getParentRoute: () => rootRoute,
-} as any)
+const PrilozhenieLayoutPerepiskaRoute = PrilozhenieLayoutPerepiskaImport.update(
+  {
+    id: '/perepiska',
+    path: '/perepiska',
+    getParentRoute: () => PrilozhenieLayoutRoute,
+  } as any,
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -92,8 +94,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistratciyaImport
       parentRoute: typeof rootRoute
     }
-    '/prilozhenie/': {
-      id: '/prilozhenie/'
+    '/prilozhenie': {
+      id: '/prilozhenie'
       path: '/prilozhenie'
       fullPath: '/prilozhenie'
       preLoaderRoute: typeof PrilozhenieImport
@@ -105,6 +107,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/prilozhenie'
       preLoaderRoute: typeof PrilozhenieLayoutImport
       parentRoute: typeof PrilozhenieRoute
+    }
+    '/prilozhenie/_layout/perepiska': {
+      id: '/prilozhenie/_layout/perepiska'
+      path: '/perepiska'
+      fullPath: '/prilozhenie/perepiska'
+      preLoaderRoute: typeof PrilozhenieLayoutPerepiskaImport
+      parentRoute: typeof PrilozhenieLayoutImport
     }
     '/prilozhenie/_layout/': {
       id: '/prilozhenie/_layout/'
@@ -119,10 +128,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface PrilozhenieLayoutRouteChildren {
+  PrilozhenieLayoutPerepiskaRoute: typeof PrilozhenieLayoutPerepiskaRoute
   PrilozhenieLayoutIndexRoute: typeof PrilozhenieLayoutIndexRoute
 }
 
 const PrilozhenieLayoutRouteChildren: PrilozhenieLayoutRouteChildren = {
+  PrilozhenieLayoutPerepiskaRoute: PrilozhenieLayoutPerepiskaRoute,
   PrilozhenieLayoutIndexRoute: PrilozhenieLayoutIndexRoute,
 }
 
@@ -145,14 +156,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie': typeof PrilozhenieIndexRoute
+  '/prilozhenie': typeof PrilozhenieLayoutRouteWithChildren
+  '/prilozhenie/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
+  '/prilozhenie/': typeof PrilozhenieLayoutIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie': typeof PrilozhenieIndexRoute
+  '/prilozhenie': typeof PrilozhenieLayoutIndexRoute
+  '/prilozhenie/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
 }
 
 export interface FileRoutesById {
@@ -160,15 +174,37 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie/': typeof PrilozhenieIndexRoute
+  '/prilozhenie': typeof PrilozhenieRouteWithChildren
+  '/prilozhenie/_layout': typeof PrilozhenieLayoutRouteWithChildren
+  '/prilozhenie/_layout/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
+  '/prilozhenie/_layout/': typeof PrilozhenieLayoutIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
+  fullPaths:
+    | '/'
+    | '/avtorizatciya'
+    | '/registratciya'
+    | '/prilozhenie'
+    | '/prilozhenie/perepiska'
+    | '/prilozhenie/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
-  id: '__root__' | '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie/'
+  to:
+    | '/'
+    | '/avtorizatciya'
+    | '/registratciya'
+    | '/prilozhenie'
+    | '/prilozhenie/perepiska'
+  id:
+    | '__root__'
+    | '/'
+    | '/avtorizatciya'
+    | '/registratciya'
+    | '/prilozhenie'
+    | '/prilozhenie/_layout'
+    | '/prilozhenie/_layout/perepiska'
+    | '/prilozhenie/_layout/'
   fileRoutesById: FileRoutesById
 }
 
@@ -176,14 +212,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AvtorizatciyaRoute: typeof AvtorizatciyaRoute
   RegistratciyaRoute: typeof RegistratciyaRoute
-  PrilozhenieIndexRoute: typeof PrilozhenieIndexRoute
+  PrilozhenieRoute: typeof PrilozhenieRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AvtorizatciyaRoute: AvtorizatciyaRoute,
   RegistratciyaRoute: RegistratciyaRoute,
-  PrilozhenieIndexRoute: PrilozhenieIndexRoute,
+  PrilozhenieRoute: PrilozhenieRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -199,7 +235,7 @@ export const routeTree = rootRoute
         "/",
         "/avtorizatciya",
         "/registratciya",
-        "/prilozhenie/"
+        "/prilozhenie"
       ]
     },
     "/": {
@@ -211,8 +247,27 @@ export const routeTree = rootRoute
     "/registratciya": {
       "filePath": "registratciya.tsx"
     },
-    "/prilozhenie/": {
-      "filePath": "prilozhenie/index.tsx"
+    "/prilozhenie": {
+      "filePath": "prilozhenie",
+      "children": [
+        "/prilozhenie/_layout"
+      ]
+    },
+    "/prilozhenie/_layout": {
+      "filePath": "prilozhenie/_layout.tsx",
+      "parent": "/prilozhenie",
+      "children": [
+        "/prilozhenie/_layout/perepiska",
+        "/prilozhenie/_layout/"
+      ]
+    },
+    "/prilozhenie/_layout/perepiska": {
+      "filePath": "prilozhenie/_layout/perepiska.tsx",
+      "parent": "/prilozhenie/_layout"
+    },
+    "/prilozhenie/_layout/": {
+      "filePath": "prilozhenie/_layout/index.tsx",
+      "parent": "/prilozhenie/_layout"
     }
   }
 }
