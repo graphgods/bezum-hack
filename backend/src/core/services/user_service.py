@@ -1,4 +1,5 @@
 from src.core.services.__base__ import BaseService
+from src.core.photos import get_random_photo
 
 
 class UserService(BaseService):
@@ -9,6 +10,8 @@ class UserService(BaseService):
 
         user = {
             "username": username,
+            "password": password,
+            "photo": await get_random_photo()
             "email": email,
             "password": password
         }

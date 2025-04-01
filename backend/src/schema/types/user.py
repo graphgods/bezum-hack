@@ -5,6 +5,7 @@ from strawberry import type
 class UserType:
     username: str
     password: str
+    photo: str
     email: str
 
     @staticmethod
