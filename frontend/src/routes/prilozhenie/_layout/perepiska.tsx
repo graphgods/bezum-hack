@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import mama from "../../images/mama.png";
+import mama from "../../../images/mama.png";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { getIIOtvet } from "@/lib/ai-client";
 
-export const Route = createFileRoute("/prilozhenie/perepiska")({
+export const Route = createFileRoute("/prilozhenie/_layout/perepiska")({
   component: Stranitsa,
 });
 
