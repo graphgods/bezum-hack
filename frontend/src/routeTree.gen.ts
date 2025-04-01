@@ -16,13 +16,9 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as RegistratciyaImport } from './routes/registratciya'
 import { Route as AvtorizatciyaImport } from './routes/avtorizatciya'
 import { Route as IndexImport } from './routes/index'
-import { Route as PrilozheniePerepiskaImport } from './routes/prilozhenie/perepiska'
 import { Route as PrilozhenieLayoutImport } from './routes/prilozhenie/_layout'
 import { Route as PrilozhenieLayoutIndexImport } from './routes/prilozhenie/_layout/index'
-<<<<<<< HEAD
-=======
 import { Route as PrilozhenieLayoutPerepiskaImport } from './routes/prilozhenie/_layout/perepiska'
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
 
 // Create Virtual Routes
 
@@ -54,12 +50,6 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PrilozheniePerepiskaRoute = PrilozheniePerepiskaImport.update({
-  id: '/perepiska',
-  path: '/perepiska',
-  getParentRoute: () => PrilozhenieRoute,
-} as any)
-
 const PrilozhenieLayoutRoute = PrilozhenieLayoutImport.update({
   id: '/_layout',
   getParentRoute: () => PrilozhenieRoute,
@@ -71,8 +61,6 @@ const PrilozhenieLayoutIndexRoute = PrilozhenieLayoutIndexImport.update({
   getParentRoute: () => PrilozhenieLayoutRoute,
 } as any)
 
-<<<<<<< HEAD
-=======
 const PrilozhenieLayoutPerepiskaRoute = PrilozhenieLayoutPerepiskaImport.update(
   {
     id: '/perepiska',
@@ -81,7 +69,6 @@ const PrilozhenieLayoutPerepiskaRoute = PrilozhenieLayoutPerepiskaImport.update(
   } as any,
 )
 
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -121,21 +108,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrilozhenieLayoutImport
       parentRoute: typeof PrilozhenieRoute
     }
-<<<<<<< HEAD
-    '/prilozhenie/perepiska': {
-      id: '/prilozhenie/perepiska'
-      path: '/perepiska'
-      fullPath: '/prilozhenie/perepiska'
-      preLoaderRoute: typeof PrilozheniePerepiskaImport
-      parentRoute: typeof PrilozhenieImport
-=======
     '/prilozhenie/_layout/perepiska': {
       id: '/prilozhenie/_layout/perepiska'
       path: '/perepiska'
       fullPath: '/prilozhenie/perepiska'
       preLoaderRoute: typeof PrilozhenieLayoutPerepiskaImport
       parentRoute: typeof PrilozhenieLayoutImport
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
     }
     '/prilozhenie/_layout/': {
       id: '/prilozhenie/_layout/'
@@ -164,12 +142,10 @@ const PrilozhenieLayoutRouteWithChildren =
 
 interface PrilozhenieRouteChildren {
   PrilozhenieLayoutRoute: typeof PrilozhenieLayoutRouteWithChildren
-  PrilozheniePerepiskaRoute: typeof PrilozheniePerepiskaRoute
 }
 
 const PrilozhenieRouteChildren: PrilozhenieRouteChildren = {
   PrilozhenieLayoutRoute: PrilozhenieLayoutRouteWithChildren,
-  PrilozheniePerepiskaRoute: PrilozheniePerepiskaRoute,
 }
 
 const PrilozhenieRouteWithChildren = PrilozhenieRoute._addFileChildren(
@@ -181,11 +157,7 @@ export interface FileRoutesByFullPath {
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
   '/prilozhenie': typeof PrilozhenieLayoutRouteWithChildren
-<<<<<<< HEAD
-  '/prilozhenie/perepiska': typeof PrilozheniePerepiskaRoute
-=======
   '/prilozhenie/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
   '/prilozhenie/': typeof PrilozhenieLayoutIndexRoute
 }
 
@@ -194,11 +166,7 @@ export interface FileRoutesByTo {
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
   '/prilozhenie': typeof PrilozhenieLayoutIndexRoute
-<<<<<<< HEAD
-  '/prilozhenie/perepiska': typeof PrilozheniePerepiskaRoute
-=======
   '/prilozhenie/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
 }
 
 export interface FileRoutesById {
@@ -208,11 +176,7 @@ export interface FileRoutesById {
   '/registratciya': typeof RegistratciyaRoute
   '/prilozhenie': typeof PrilozhenieRouteWithChildren
   '/prilozhenie/_layout': typeof PrilozhenieLayoutRouteWithChildren
-<<<<<<< HEAD
-  '/prilozhenie/perepiska': typeof PrilozheniePerepiskaRoute
-=======
   '/prilozhenie/_layout/perepiska': typeof PrilozhenieLayoutPerepiskaRoute
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
   '/prilozhenie/_layout/': typeof PrilozhenieLayoutIndexRoute
 }
 
@@ -239,11 +203,7 @@ export interface FileRouteTypes {
     | '/registratciya'
     | '/prilozhenie'
     | '/prilozhenie/_layout'
-<<<<<<< HEAD
-    | '/prilozhenie/perepiska'
-=======
     | '/prilozhenie/_layout/perepiska'
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
     | '/prilozhenie/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -290,26 +250,13 @@ export const routeTree = rootRoute
     "/prilozhenie": {
       "filePath": "prilozhenie",
       "children": [
-<<<<<<< HEAD
-        "/prilozhenie/_layout",
-        "/prilozhenie/perepiska"
-=======
         "/prilozhenie/_layout"
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
       ]
     },
     "/prilozhenie/_layout": {
       "filePath": "prilozhenie/_layout.tsx",
       "parent": "/prilozhenie",
       "children": [
-<<<<<<< HEAD
-        "/prilozhenie/_layout/"
-      ]
-    },
-    "/prilozhenie/perepiska": {
-      "filePath": "prilozhenie/perepiska.tsx",
-      "parent": "/prilozhenie"
-=======
         "/prilozhenie/_layout/perepiska",
         "/prilozhenie/_layout/"
       ]
@@ -317,7 +264,6 @@ export const routeTree = rootRoute
     "/prilozhenie/_layout/perepiska": {
       "filePath": "prilozhenie/_layout/perepiska.tsx",
       "parent": "/prilozhenie/_layout"
->>>>>>> dbdc7aa6f244a50b88a8a89671689352be412478
     },
     "/prilozhenie/_layout/": {
       "filePath": "prilozhenie/_layout/index.tsx",
