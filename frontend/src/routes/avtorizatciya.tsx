@@ -66,7 +66,7 @@ function Stranitca() {
           <p>{polzovatel.password}</p>
           <div className="flex gap-2">
             <Button>
-              <Link to="/">Мой</Link>
+              <Link to="/prilozhenie">Мой</Link>
             </Button>
             <Button
               onClick={() => {

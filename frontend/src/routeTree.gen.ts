@@ -18,6 +18,7 @@ import { Route as AvtorizatciyaImport } from './routes/avtorizatciya'
 import { Route as IndexImport } from './routes/index'
 import { Route as PrilozhenieLayoutImport } from './routes/prilozhenie/_layout'
 import { Route as PrilozhenieLayoutIndexImport } from './routes/prilozhenie/_layout/index'
+import { Route as PrilozheniePerepiskaImport } from './routes/prilozhenie/perepiska'
 
 // Create Virtual Routes
 
@@ -60,6 +61,12 @@ const PrilozhenieLayoutIndexRoute = PrilozhenieLayoutIndexImport.update({
   getParentRoute: () => PrilozhenieLayoutRoute,
 } as any)
 
+const PrilozheniePerepiskaRoute = PrilozheniePerepiskaImport.update({
+  id: '/prilozhenie/perepiska',
+  path: '/prilozhenie/perepiska',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -85,8 +92,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistratciyaImport
       parentRoute: typeof rootRoute
     }
-    '/prilozhenie': {
-      id: '/prilozhenie'
+    '/prilozhenie/': {
+      id: '/prilozhenie/'
       path: '/prilozhenie'
       fullPath: '/prilozhenie'
       preLoaderRoute: typeof PrilozhenieImport
@@ -138,15 +145,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie': typeof PrilozhenieLayoutRouteWithChildren
-  '/prilozhenie/': typeof PrilozhenieLayoutIndexRoute
+  '/prilozhenie': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie': typeof PrilozhenieLayoutIndexRoute
+  '/prilozhenie': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRoutesById {
@@ -154,29 +160,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
-  '/prilozhenie': typeof PrilozhenieRouteWithChildren
-  '/prilozhenie/_layout': typeof PrilozhenieLayoutRouteWithChildren
-  '/prilozhenie/_layout/': typeof PrilozhenieLayoutIndexRoute
+  '/prilozhenie/': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/avtorizatciya'
-    | '/registratciya'
-    | '/prilozhenie'
-    | '/prilozhenie/'
+  fullPaths: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
-  id:
-    | '__root__'
-    | '/'
-    | '/avtorizatciya'
-    | '/registratciya'
-    | '/prilozhenie'
-    | '/prilozhenie/_layout'
-    | '/prilozhenie/_layout/'
+  id: '__root__' | '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie/'
   fileRoutesById: FileRoutesById
 }
 
@@ -184,14 +176,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AvtorizatciyaRoute: typeof AvtorizatciyaRoute
   RegistratciyaRoute: typeof RegistratciyaRoute
-  PrilozhenieRoute: typeof PrilozhenieRouteWithChildren
+  PrilozhenieIndexRoute: typeof PrilozhenieIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AvtorizatciyaRoute: AvtorizatciyaRoute,
   RegistratciyaRoute: RegistratciyaRoute,
-  PrilozhenieRoute: PrilozhenieRouteWithChildren,
+  PrilozhenieIndexRoute: PrilozhenieIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -207,7 +199,7 @@ export const routeTree = rootRoute
         "/",
         "/avtorizatciya",
         "/registratciya",
-        "/prilozhenie"
+        "/prilozhenie/"
       ]
     },
     "/": {
@@ -219,22 +211,8 @@ export const routeTree = rootRoute
     "/registratciya": {
       "filePath": "registratciya.tsx"
     },
-    "/prilozhenie": {
-      "filePath": "prilozhenie",
-      "children": [
-        "/prilozhenie/_layout"
-      ]
-    },
-    "/prilozhenie/_layout": {
-      "filePath": "prilozhenie/_layout.tsx",
-      "parent": "/prilozhenie",
-      "children": [
-        "/prilozhenie/_layout/"
-      ]
-    },
-    "/prilozhenie/_layout/": {
-      "filePath": "prilozhenie/_layout/index.tsx",
-      "parent": "/prilozhenie/_layout"
+    "/prilozhenie/": {
+      "filePath": "prilozhenie/index.tsx"
     }
   }
 }
