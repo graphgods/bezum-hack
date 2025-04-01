@@ -4,4 +4,8 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "strawberry-graphql[asgi]>=0.263.0",
+    "tinydb>=4.8.2",
+    "uvicorn>=0.34.0",
+]
