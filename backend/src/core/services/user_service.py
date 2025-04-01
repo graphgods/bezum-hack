@@ -11,9 +11,8 @@ class UserService(BaseService):
         user = {
             "username": username,
             "password": password,
-            "photo": await get_random_photo()
+            "photo": await get_random_photo(),
             "email": email,
-            "password": password
         }
 
         self.repo.insert(user)
