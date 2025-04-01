@@ -32,3 +32,9 @@ services:
       - ./certbot/conf/live/bezum.hack.makridenko.ru/privkey.pem:/etc/nginx/ssl/live/bezum.hack.makridenko.ru/privkey.pem
 
 
+  backend:
+    container_name: backend
+    build: backend/
+    ports:
+      - "8000:8000"
+
