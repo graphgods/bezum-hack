@@ -13,7 +13,7 @@ export const Route = createRootRoute({
       <Toaster />
       <Drawer>
         <DrawerTrigger asChild>
-          <Button className="text-xs size-20 p-0 block  rounded all break-all absolute right-4 bottom-4">
+          <Button className="text-xs size-20 p-0 block  rounded all break-all fixed right-4 bottom-16">
             Вы
             <br /> организатор <br />
             БЕЗУМhack?
