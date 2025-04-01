@@ -1,5 +1,3 @@
-from typing import Any
-
 from strawberry import type, field
 
 from src.core.services.user_service import UserService
