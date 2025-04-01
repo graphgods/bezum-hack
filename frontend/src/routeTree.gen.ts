@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as RegistratciyaImport } from './routes/registratciya'
 import { Route as AvtorizatciyaImport } from './routes/avtorizatciya'
 import { Route as IndexImport } from './routes/index'
+import { Route as PrilozhenieIndexImport } from './routes/prilozhenie/index'
 
 // Create/Update Routes
 
@@ -32,6 +33,12 @@ const AvtorizatciyaRoute = AvtorizatciyaImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PrilozhenieIndexRoute = PrilozhenieIndexImport.update({
+  id: '/prilozhenie/',
+  path: '/prilozhenie/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegistratciyaImport
       parentRoute: typeof rootRoute
     }
+    '/prilozhenie/': {
+      id: '/prilozhenie/'
+      path: '/prilozhenie'
+      fullPath: '/prilozhenie'
+      preLoaderRoute: typeof PrilozhenieIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
+  '/prilozhenie': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
+  '/prilozhenie': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +98,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/avtorizatciya': typeof AvtorizatciyaRoute
   '/registratciya': typeof RegistratciyaRoute
+  '/prilozhenie/': typeof PrilozhenieIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/avtorizatciya' | '/registratciya'
+  fullPaths: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/avtorizatciya' | '/registratciya'
-  id: '__root__' | '/' | '/avtorizatciya' | '/registratciya'
+  to: '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie'
+  id: '__root__' | '/' | '/avtorizatciya' | '/registratciya' | '/prilozhenie/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +114,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AvtorizatciyaRoute: typeof AvtorizatciyaRoute
   RegistratciyaRoute: typeof RegistratciyaRoute
+  PrilozhenieIndexRoute: typeof PrilozhenieIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AvtorizatciyaRoute: AvtorizatciyaRoute,
   RegistratciyaRoute: RegistratciyaRoute,
+  PrilozhenieIndexRoute: PrilozhenieIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/avtorizatciya",
-        "/registratciya"
+        "/registratciya",
+        "/prilozhenie/"
       ]
     },
     "/": {
@@ -128,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/registratciya": {
       "filePath": "registratciya.tsx"
+    },
+    "/prilozhenie/": {
+      "filePath": "prilozhenie/index.tsx"
     }
   }
 }
