@@ -1,11 +1,11 @@
 {
   "framework": "react",
   "projectName": "frontend",
-  "typescript": false,
+  "typescript": true,
   "tailwind": false,
   "packageManager": "bun",
   "toolchain": "none",
-  "mode": "code-router",
+  "mode": "file-router",
   "git": true,
   "variableValues": {},
   "version": 1,
