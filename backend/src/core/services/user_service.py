@@ -1,4 +1,5 @@
 from src.core.services.__base__ import BaseService
+from src.core.photos import get_random_photo
 
 class UserService(BaseService):
     def __init__(self) -> None:
@@ -10,7 +11,8 @@ class UserService(BaseService):
 
         user = {
             "username": username,
-            "password": password
+            "password": password,
+            "photo": await get_random_photo()
         }
 
         self.repo.insert(user)
