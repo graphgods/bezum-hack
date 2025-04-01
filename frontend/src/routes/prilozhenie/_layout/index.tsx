@@ -16,7 +16,9 @@ export const Route = createFileRoute("/prilozhenie/_layout/")({
 
 function RouteComponent() {
   const [podborki, setPodporki] = React.useState([]);
-  console.log(podborki);
+  const [podborka, setPodborka] = React.useState("");
+  const [podborkaContent, setPodborkaContent] = React.useState("");
+
   React.useEffect(() => {
     const sdelatNooviyPodborki = async () => {
       const noviyPodborki = await getIIOtvet({
@@ -30,27 +32,18 @@ function RouteComponent() {
     sdelatNooviyPodborki();
   }, []);
 
-  const [podborkyContent, setPodborkyContent] = React.useState({});
-
   React.useEffect(() => {
     const fetchContent = async () => {
-      const resulut = {};
+      const text = await getIIOtvet({
+        zapros: `Сгенируй мне много разных предложений который объяснит почему ${podborka}`,
+      });
 
-      for (const podborka of podborki) {
-        const text = await getIIOtvet({
-          zapros: `Сгенируй мне много разных предложений которые будут поддерживать тему что ты ${podborka}`,
-        });
-        console.log(text, '1')
-        resulut[podborka] = text;
-      }
-      console.log(resulut, '4')
-      setPodborkyContent(resulut);
+      setPodborkaContent(text);
     };
 
     fetchContent();
-  }, [podborki]);
+  }, [podborka]);
 
-  console.log(podborkyContent, "111111");
   return (
     <div className="h-full">
       <div className="h-[40vh] flex flex-col gap-2 justify-center items-center">
@@ -65,18 +58,32 @@ function RouteComponent() {
           <CarouselContent className="ml-4 mt-4">
             {podborki.length === 0 &&
               "сейчас твоя мама придумает тебе подборки..."}
-            {podborki.map((podborka, i) => (
+            {podborki.map((podborkaMap, i) => (
               <CarouselItem
                 key={i}
                 className="mr-4 bg-pink-500 basis-[33%] size-30 rounded-md text-white flex items-center"
               >
-                <Drawer>
-                  <DrawerTrigger>{podborka}</DrawerTrigger>
+                <Drawer
+                  onOpenChange={(otkritie) => {
+                    switch (otkritie) {
+                      case true:
+                        setPodborka(podborkaMap);
+                        break;
+                      case false:
+                        setPodborkaContent("");
+                        setPodborka("");
+                        break;
+                    }
+                  }}
+                >
+                  <DrawerTrigger onClick={() => setPodborka(podborkaMap)}>
+                    {podborkaMap}
+                  </DrawerTrigger>
                   <DrawerContent className="h-[60vh]">
                     <div className="text-center flex items-center justify-center">
-                      {podborkyContent[podborka]
-                        ? podborkyContent[podborka]
-                        : `Мама еще не придумала какой ${podborka}`}
+                      {podborkaContent
+                        ? podborkaContent
+                        : `Твоя мама еще не придумала какой ${podborka}...`}
                     </div>
                   </DrawerContent>
                 </Drawer>
