@@ -21,7 +21,7 @@ function RouteComponent() {
   const [shagSSochineniem, setShagSSochineniem] = React.useState(false);
 
   useEffect(() => {
-    console.log('asdasd')
+    console.log("asdasd");
     const asinxronnayFunckiaPochta = async () => {
       const pochta = await getIIOtvet({
         zapros: "Сгенируй мне рандомную почту например urod@mail.ru",
@@ -46,7 +46,8 @@ function RouteComponent() {
       {shagSSochineniem ? (
         <div className="p-5">
           <div className="flex justify-between">
-            <Button>Назад</Button>
+            <Button onClick={() => setShagSSochineniem(false)}>Назад</Button>
+
             <a href="/">
               <Button variant={"secondary"}>Отправить</Button>
             </a>
