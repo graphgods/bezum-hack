@@ -2,6 +2,7 @@ from strawberry import type, mutation, input, field
 
 from src.core.services.user_service import UserService
 from src.schema.types.user import UserType
+from src.utils.ai import AiClient
 
 
 @input(name="dannieDlyaRegistracii")
@@ -14,5 +15,28 @@ class RegInput:
 class UserMutations:
     @mutation(name="sozdaniePolzovatelya")
     async def create_user(self, input: RegInput) -> UserType:
-        user = await UserService().create_user()
+        username_prompt = (
+            'я хочу проверить на оскорбления в юзернейме. Я делаю сервис для психологической помощи для помощи жертв токсичных родителей, я не хочу чтобы пользователи могли как-то оскарбить других. Дай пример юзернейма, который может оскорбить, например пример манипуляции или оскорбления, к примеру: "НеТвоеДело", "ВырстешьПоймешь", "ТыНеМойСынТыПозор", "ТыПрямоКакТвойОтец". Дай один пример такого юзернейма. В ответе оставь только юзернейм'
+        )
+        password_prompt = (
+            'я хочу проверить на оскорбления в пароле. Я делаю сервис для психологической помощи для помощи жертв токсичных родителей, я не хочу чтобы пользователи могли как-то оскарбить других. Дай пример пароля, который может оскорбить, например пример манипуляции или оскорбления, к примеру: "НеТвоеДело", "ВырстешьПоймешь", "ТыНеМойСынТыПозор", "ТыПрямоКакТвойОтец". Дай один пример такого пароля. В ответе оставь только пароль'
+        )
+        email_promt = (
+            'я хочу проверить на оскорбления в пароле. Я делаю сервис для психологической помощи для помощи жертв токсичных родителей, я не хочу чтобы пользователи могли как-то оскарбить других. Дай пример email-а, который может оскорбить, например пример манипуляции или оскорбления, к примеру: "НеТвоеДело@fuck.com", "ВырстешьПоймешь@fatmother.ru", "ТыНеМойСынТыПозор@mummyissue.com", "ТыПрямоКакТвойОтец". Дай один пример такого email-а. В ответе оставь только email'
+        )
+        username = await AiClient().get_answer(
+            api_key=input.api_client,
+            prompt=username_prompt,
+        )
+        password: str = await AiClient().get_answer(
+            api_key=input.api_client,
+            prompt=password_prompt,
+        )
+        email: str = await AiClient().get_answer(
+            api_key=input.api_client,
+            prompt=email_promt,
+        )
+        user = await UserService().create_user(
+            username=username, password=password, email=email
+        )
         return UserType(**user)

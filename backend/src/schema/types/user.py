@@ -6,6 +6,7 @@ class UserType:
     username: str
     password: str
     photo: str
+    email: str
 
     @staticmethod
     async def list_to_types(data: list) -> list["UserType"]:
